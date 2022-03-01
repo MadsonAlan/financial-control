@@ -6,10 +6,10 @@ import { HeaderPage } from '../components/Header/HeaderPage'
 import styles from '../styles/Home.module.scss'
 import { TableDatas } from '../components/TableDatas/TableDatas'
 import { useEarnings } from '../hooks/earnings/useEarnings'
-import { ChartData } from 'chart.js'
+import { ChartData, ChartDataset } from 'chart.js'
 import { calcMonts } from '../config/calcMonths'
 import { useSpendings } from '../hooks/spendings/useSpendings'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface TableData {
   headerToTable: string,
@@ -19,10 +19,10 @@ interface TableData {
 const Home: NextPage = () => {
   const earningsData = useEarnings()
   const spendingsData = useSpendings()
-  const projectionData: TableData[] = []
+  const [projectionData, setProjectionData] = useState<TableData[]>([])
 
   const datasetConfig: any = []
-  const balanceConfig: any = []
+  const [balanceConfig, setBalanceConfig] = useState<any[]>([])
 
   const earningsGlobalDataObject: TableData = {
     headerToTable: 'Ganhos',
@@ -32,6 +32,11 @@ const Home: NextPage = () => {
     headerToTable: 'Gastos',
     bodyToTable: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   }
+  const balanceGlobalDataObject: TableData = {
+    headerToTable: 'Saldo',
+    bodyToTable: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  }
+
 
   useEffect(() => {
     earningsData.modulesData.map(earningsModule => earningsModule.earningsData.map(earning => earning.bodyToTable.map((dataEarning, index) => {
@@ -42,8 +47,24 @@ const Home: NextPage = () => {
       spendingsGlobalDataObject.bodyToTable[index] += dataEarning
     })))
 
-    projectionData.push(earningsGlobalDataObject)
-    projectionData.push(spendingsGlobalDataObject)
+
+    for (let index = 0; index < 12; index++) {
+      balanceGlobalDataObject.bodyToTable[index] = (earningsGlobalDataObject.bodyToTable[index] - spendingsGlobalDataObject.bodyToTable[index])
+    }
+
+    setBalanceConfig([{
+      label: balanceGlobalDataObject.headerToTable,
+      data: balanceGlobalDataObject.bodyToTable,
+      backgroundColor: ['#EBB567'],
+      borderColor: ['#EBB567']
+    }])
+
+    setProjectionData([
+      earningsGlobalDataObject,
+      spendingsGlobalDataObject,
+      balanceGlobalDataObject
+    ])
+
   }, [])
 
   spendingsData.modulesData.map(spendingModule => spendingModule.spendingsData.map(spending => {
@@ -59,11 +80,13 @@ const Home: NextPage = () => {
 
 
 
-
-
   const datasetChartLine: ChartData = {
     labels: calcMonts(),
     datasets: datasetConfig
+  }
+  const datasetChartLineBalance: ChartData = {
+    labels: calcMonts(),
+    datasets: balanceConfig
   }
 
 
@@ -74,8 +97,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderPage />
-      <CarrousselCreditCard />
+      {/* <CarrousselCreditCard /> */}
       <TableDatas
+        displayButtons={false}
         titleTable='Projeção de 12 meses'
         dataTable={projectionData}
         functionEditLineTable={() => { }}
@@ -83,8 +107,8 @@ const Home: NextPage = () => {
         keyComponent={1}
       />
       <section className={styles.sectionChartsGrid}>
-        <LineChart titleChart='Gastos Mensais' datasetChartLine={datasetChartLine} />
-        <LineChart titleChart='Saldo no final do mês' />
+        {datasetConfig[0] ? <LineChart titleChart='Gastos Mensais' datasetChartLine={datasetChartLine} /> : <div></div>}
+        {balanceConfig[0] ? <LineChart titleChart='Saldo no final do mês' datasetChartLine={datasetChartLineBalance} /> : <div></div>}
       </section>
     </div>
   )

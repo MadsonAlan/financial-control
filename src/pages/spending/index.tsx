@@ -25,6 +25,7 @@ export default function SpendingPage() {
             <button onClick={openModuleModal}>Adicionar tipo de gasto</button>
             {modulesData.map((module, index) =>
                 <TableDatas
+                    displayButtons={true}
                     key={index}
                     keyComponent={index}
                     titleTable={module.title}

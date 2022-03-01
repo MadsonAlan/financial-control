@@ -6,7 +6,7 @@ import styles from './styles.module.scss'
 
 interface PropsLineChart {
     titleChart: string;
-    datasetChartLine?: ChartData
+    datasetChartLine?: ChartData;
 }
 export function LineChart({ titleChart, datasetChartLine }: PropsLineChart) {
     const datasetChartLineInt: ChartData = {

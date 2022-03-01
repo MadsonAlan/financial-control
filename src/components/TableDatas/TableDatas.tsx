@@ -6,6 +6,7 @@ import { calcMonts } from '../../config/calcMonths';
 import styles from './styles.module.scss';
 
 interface PropsTableDatas {
+    displayButtons: boolean
     titleTable: string
     keyComponent: number
     dataTable: { headerToTable: string, bodyToTable: number[] }[]
@@ -14,7 +15,7 @@ interface PropsTableDatas {
     functionEdit?: () => void
     functionEditLineTable: (index: number, keyComponent: number) => void
 }
-export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, functionExclude, functionEdit, functionEditLineTable }: PropsTableDatas) {
+export function TableDatas({ displayButtons, keyComponent, titleTable, dataTable, functionAdd, functionExclude, functionEdit, functionEditLineTable }: PropsTableDatas) {
     const [oneYearRange, setOneYearRange] = useState<string[]>([])
     const [indexSelected, setIndexSelected] = useState<number>(0)
     const [selected, setSelected] = useState('')
@@ -46,8 +47,8 @@ export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, f
     return (
         <div className={styles.tableContainer}>
             <div>
-                <button onClick={functionEdit}><h2>{titleTable} <AiOutlineEdit /></h2></button>
-                <button className={styles.buttonExcludeModule} onClick={() => setIsOpen(true)}><CgTrash /> Excluir seção</button>
+                <button onClick={functionEdit}><h2>{titleTable} {displayButtons ? <AiOutlineEdit /> : <></>}</h2></button>
+                {displayButtons ? <button className={styles.buttonExcludeModule} onClick={() => setIsOpen(true)}><CgTrash /> Excluir seção</button> : <></>}
             </div>
             <table>
                 <tr>
@@ -75,15 +76,10 @@ export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, f
                     )
                 }
 
-                <tr>
-                    <th>Saldo</th>
-                    <td></td>
-                </tr>
-
             </table>
-            <div className={styles.addButton}>
+            {displayButtons ? <div className={styles.addButton}>
                 <button onClick={functionAdd}><CgPlayListAdd />Adicionar novo</button>
-            </div>
+            </div> : <></>}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

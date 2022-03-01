@@ -23,6 +23,7 @@ export default function EarningsPage() {
             <button onClick={openModuleModal}>Adicionar ganho</button>
             {modulesData.map((module, index) =>
                 <TableDatas
+                    displayButtons={true}
                     key={index}
                     keyComponent={index}
                     titleTable={module.title}
