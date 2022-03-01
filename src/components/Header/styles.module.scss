@@ -1,0 +1,43 @@
+.header {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(5px);
+    section {
+        display: flex;
+        width: 100%;
+        max-width: 992px;
+        justify-content: flex-end;
+        align-items: center;
+        color: var(--black);
+    }
+}
+
+.menu {
+    li {
+        margin: 0 1rem;
+        display: block;
+        width: fit-content;
+        position: relative;
+        a {
+            margin: 0 2rem;
+            transition: 0.2s;
+            &:hover {
+                color: var(--secondary-color);
+                border-bottom-style: outset;
+                border-bottom-width: 1.5px;
+                border-bottom-color: var(--secondary-color);
+            }
+        }
+    }
+}

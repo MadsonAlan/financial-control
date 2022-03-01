@@ -1,0 +1,30 @@
+.cardContainer {
+    cursor: pointer;
+    width: 95%;
+    height: 12rem;
+    color: var(--white);
+    background: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 1rem;
+    justify-content: space-between;
+    section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    transition: 0.2s;
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.topSection {
+    h2 {
+        margin: 0;
+    }
+    p {
+        font-size: 1rem;
+    }
+}
