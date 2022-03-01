@@ -13,7 +13,7 @@ export default function CreditCard() {
             </Head>
             <HeaderPage />
             <button>Adicionar cartão</button>
-            <TableDatas titleTable='Cartão Nubank' />
+            {/* <TableDatas titleTable='Cartão Nubank' /> */}
         </div>
     )
 }
