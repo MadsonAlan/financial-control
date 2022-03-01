@@ -20,7 +20,7 @@ export default function EarningsPage() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <HeaderPage />
-            <button onClick={openModuleModal}>Adicionar ganho</button>
+            <button onClick={openModuleModal}>Adicionar tipo de ganho</button>
             {modulesData.map((module, index) =>
                 <TableDatas
                     displayButtons={true}
