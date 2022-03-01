@@ -18,6 +18,7 @@ export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, f
     const [oneYearRange, setOneYearRange] = useState<string[]>([])
     const [indexSelected, setIndexSelected] = useState<number>(0)
     const [selected, setSelected] = useState('')
+    const d = new Date()
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -33,6 +34,14 @@ export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, f
     useEffect(() => {
         setOneYearRange(calcMonts())
     }, [])
+
+    function arrayForNowMonth(arrayData: number[]) {
+        const newArrayData = []
+        for (let index = 0; index < arrayData.length; index++) {
+            newArrayData.push(arrayData[(index + d.getMonth()) < 12 ? (index + d.getMonth()) : ((index + d.getMonth()) - 12)])
+        }
+        return newArrayData
+    }
 
     return (
         <div className={styles.tableContainer}>
@@ -56,7 +65,7 @@ export function TableDatas({ keyComponent, titleTable, dataTable, functionAdd, f
                                 {data.headerToTable}
                             </th>
                             {
-                                data.bodyToTable.map((body, index) =>
+                                arrayForNowMonth(data.bodyToTable).map((body, index) =>
                                     <td key={index}>
                                         {body.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>

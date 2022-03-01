@@ -3,10 +3,9 @@ export function calcMonts() {
 
     const presentDate = new Date();
     const newMonths: string[] = []
-    newMonths.push(months[presentDate.getMonth()])
-    for (let index = 1; index < 12; index++) {
+    for (let index = 0; index < 12; index++) {
 
-        newMonths.push(months[(presentDate.getMonth() + index) != 12 ? (presentDate.getMonth() + index) : 0])
+        newMonths.push(months[(presentDate.getMonth() + index) < 12 ? (presentDate.getMonth() + index) : ((presentDate.getMonth() + index) - 12)])
     }
 
     return newMonths

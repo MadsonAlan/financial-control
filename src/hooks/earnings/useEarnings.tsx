@@ -2,7 +2,6 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import Modal from 'react-modal';
 import { CgClose } from 'react-icons/cg';
 import styles from './styles.module.scss'
-import { calcMonts } from "../../config/calcMonths";
 import { ModalAddModule } from "../../components/ModalAddModule/ModalAddModule";
 interface TableData {
     headerToTable: string,
@@ -46,9 +45,9 @@ export function EarningsProvider({ children }: EarningsProviderProps): JSX.Eleme
     }, [])
 
     useEffect(() => {
-        calcMonts()
-        for (let index = 0; index < calcMonts().length; index++) {
-            const element = calcMonts()[index];
+        const monthsOnYear = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+        for (let index = 0; index < monthsOnYear.length; index++) {
+            const element = monthsOnYear[index];
             months.push({
                 name: element,
                 value: false

@@ -46,9 +46,9 @@ export function SpendingsProvider({ children }: SpendingsProviderProps): JSX.Ele
         }
     }, [])
     useEffect(() => {
-        calcMonts()
-        for (let index = 0; index < calcMonts().length; index++) {
-            const element = calcMonts()[index];
+        const monthsOnYear = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+        for (let index = 0; index < monthsOnYear.length; index++) {
+            const element = monthsOnYear[index];
             months.push({
                 name: element,
                 value: false
